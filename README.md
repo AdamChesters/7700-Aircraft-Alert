@@ -6,6 +6,9 @@ Built with Electron + React + Vite. Runs on Windows and macOS.
 
 ---
 
+<img width="1280" height="906" alt="image" src="https://github.com/user-attachments/assets/fea003bb-a60e-42ae-9f58-08bc7bb4f18d" />
+
+
 ## Planned Features
 
 1st release is a super-alpha proof of concept at this stage. Intending to add:

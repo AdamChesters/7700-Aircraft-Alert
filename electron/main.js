@@ -29,15 +29,38 @@ let isPolling = false
 
 const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged
 
+// Single instance lock — if another instance is already running, focus it and quit
+const gotLock = app.requestSingleInstanceLock()
+if (!gotLock) {
+  app.quit()
+}
+
+app.on('second-instance', () => {
+  if (mainWindow) {
+    if (mainWindow.isMinimized()) mainWindow.restore()
+    mainWindow.show()
+    mainWindow.focus()
+  }
+})
+
+function getIconPath() {
+  try {
+    const p = path.join(app.getAppPath(), 'assets', 'icon.ico')
+    require('fs').accessSync(p)
+    return p
+  } catch {
+    return undefined
+  }
+}
+
 function createWindow() {
-  const iconPath = path.join(__dirname, '../assets/icon.ico')
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     minWidth: 900,
     minHeight: 600,
     backgroundColor: '#0a0e1a',
-    icon: iconPath,
+    icon: getIconPath(),
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
     frame: process.platform !== 'darwin',
     webPreferences: {
@@ -67,8 +90,10 @@ function createWindow() {
 }
 
 function createTray() {
-  const iconPath = path.join(__dirname, '../assets/icon.ico')
-  const icon = nativeImage.createFromPath(iconPath).resize({ width: 16, height: 16 })
+  const iconPath = getIconPath()
+  const icon = iconPath
+    ? nativeImage.createFromPath(iconPath).resize({ width: 16, height: 16 })
+    : nativeImage.createEmpty()
   tray = new Tray(icon)
 
   const updateMenu = (status = 'idle') => {

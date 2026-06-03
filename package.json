@@ -28,17 +28,22 @@
     "appId": "com.app7700.app",
     "productName": "7700 Aircraft Alert",
     "artifactName": "7700 Aircraft Alert V${version}.${ext}",
+    "icon": "assets/icon",
     "directories": {
       "output": "dist-electron"
     },
     "files": [
       "dist/**/*",
-      "electron/**/*"
+      "electron/**/*",
+      "assets/icon.ico",
+      "assets/icon.png"
     ],
     "mac": {
-      "category": "public.app-category.utilities"
+      "category": "public.app-category.utilities",
+      "icon": "assets/icon.png"
     },
     "win": {
+      "icon": "assets/icon.ico",
       "target": [
         { "target": "portable", "arch": ["x64"] }
       ]

@@ -14,6 +14,8 @@ Built with Electron + React + Vite. Runs on Windows and macOS.
 
 **[7700 Aircraft Alert V1.0.0.exe](https://github.com/Obsidiate/7700/releases/latest)** — portable single file, no installation required. Settings persist between sessions.
 
+This is still very much eary in development. Any issues or suggestions are quite welcome in the issues/discussions tabs above!
+
 ---
 
 ## Features

@@ -15,7 +15,7 @@ const NAV = [
   { id: 'settings',  label: 'SETTINGS',  icon: Settings },
 ]
 
-const GITHUB_REPO = 'Obsidiate/7700'
+const GITHUB_REPO = 'Obsidiate/7700-Aircraft-Alert'
 const RELEASES_URL = `https://github.com/${GITHUB_REPO}/releases`
 
 function compareSemver(a, b) {

@@ -30,12 +30,14 @@ let isPolling = false
 const isDev = process.env.NODE_ENV === 'development' || !app.isPackaged
 
 function createWindow() {
+  const iconPath = path.join(__dirname, '../assets/icon.ico')
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     minWidth: 900,
     minHeight: 600,
     backgroundColor: '#0a0e1a',
+    icon: iconPath,
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
     frame: process.platform !== 'darwin',
     webPreferences: {
@@ -65,8 +67,8 @@ function createWindow() {
 }
 
 function createTray() {
-  // Use a simple programmatic icon since we don't have asset files yet
-  const icon = nativeImage.createEmpty()
+  const iconPath = path.join(__dirname, '../assets/icon.ico')
+  const icon = nativeImage.createFromPath(iconPath).resize({ width: 16, height: 16 })
   tray = new Tray(icon)
 
   const updateMenu = (status = 'idle') => {

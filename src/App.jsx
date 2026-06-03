@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { Radio, Clock, Settings, BookOpen, AlertTriangle } from 'lucide-react'
+import appIcon from './assets/icon.png'
 import Dashboard from './panels/Dashboard.jsx'
 import History from './panels/History.jsx'
 import SettingsPanel from './panels/Settings.jsx'
@@ -144,9 +145,11 @@ export default function App() {
       {/* Sidebar */}
       <nav className="sidebar">
         <div className="sidebar-logo">
-          <div className="logo-icon">
-            <RadarIcon active={activeAlerts.length > 0} />
-          </div>
+          <img
+            src={appIcon}
+            alt="7700"
+            style={{ width: 40, height: 40, objectFit: 'contain', flexShrink: 0 }}
+          />
           <div className="logo-text">
             <span className="logo-primary">7700</span>
           </div>

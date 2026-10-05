@@ -109,3 +109,11 @@ Both free, no API key required.
 - adsb.fi: personal, non-commercial use.
 - 
 **Disclaimer:** This tool is a hobbyist/enthusiast project intended for light personal use only. It is absolutely not intended, approved, or suitable for commercial, operational, or emergency service use. It should not be considered reliable — it is in active development, subject to breaking changes, and dependent on third-party ADS-B APIs that may be blocked, rate-limited, or discontinued at any time without notice. Do not use this tool for safety-critical decision making of any kind.
+
+## Feedback and donations
+
+I love making things. Anything I've ever built has been to have fun, share fun, and make life a bit easier. If you got value from one of these things, and you'd like to chuck us a coffee, a bottle, or a god damned Ferrari, go your hardest. Then hustle over to discord to claim your supporter role!
+
+[GitHub Sponsors](https://github.com/sponsors/AdamChesters) | [Buy Me a Coffee](https://buymeacoffee.com/adamch) | [Donate with PayPal](https://www.paypal.com/donate/?business=KLHSZPXTSVSAU&no_recurring=0&item_name=I%27ve+donated+to+lots+of+small+creators+for+their+useful+little+tools%2C+now+I+create+them.+Dig+one?+I%27d+love+your+support.&currency_code=AUD)
+
+[Join the Discord](https://discord.gg/fs4WyaQPA)

@@ -36,6 +36,7 @@
     "files": [
       "dist/**/*",
       "electron/**/*",
+      "donate/**/*",
       "assets/icon.ico",
       "assets/icon.png"
     ],

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import { Radio, Clock, Settings, BookOpen, AlertTriangle, MessageSquareHeart } from 'lucide-react'
 import appIcon from './assets/icon.png'
-import SupportDialog from './components/SupportDialog.jsx'
+import SupportDialog from '../donate/SupportDialog.jsx'
 import Dashboard from './panels/Dashboard.jsx'
 import History from './panels/History.jsx'
 import SettingsPanel from './panels/Settings.jsx'
@@ -206,10 +206,10 @@ export default function App() {
         </div>
       </nav>
 
-      {supportOpen && <SupportDialog onClose={() => setSupportOpen(false)} version={appVersion || '1.1.0'}
+      {supportOpen && <SupportDialog onClose={() => setSupportOpen(false)} appName='7700 Aircraft Alert' appLogo={appIcon} appId='7700-Aircraft-Alert' appVersion={appVersion || '1.1.0'} openExternal={bridge.openExternal} sendFeedback={bridge.sendFeedback}
         updateStatus={updateBusy ? 'Checking for updates...' : updateError || (versionStatus === 'current' ? 'Up to date' : versionStatus === 'outdated' ? `Version ${latestVersion} available` : 'Updates not checked')}
         updateBusy={updateBusy} updateAvailable={versionStatus === 'outdated' ? latestVersion : ''}
-        onUpdate={() => versionStatus === 'outdated' ? bridge.openExternal(RELEASES_URL) : checkForUpdates()} />}
+        checkForUpdates={() => versionStatus === 'outdated' ? bridge.openExternal(RELEASES_URL) : checkForUpdates()} />}
       {/* Main content */}
       <main className="main-content">
         {panel === 'dashboard' && (

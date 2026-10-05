@@ -26,6 +26,8 @@ async function sendFeedback(fields, version, endpoint = FEEDBACK_ENDPOINT, reque
       signal: AbortSignal.timeout(15000),
     })
     if (!response.ok) throw new Error('delivery failed')
+    const result = await response.json()
+    if (result?.ok !== true) throw new Error('delivery not confirmed')
     return { ok: true }
   } catch { return { ok: false, error: 'Could not send feedback. Please try again, or use Discord.' } }
 }

@@ -2,6 +2,7 @@ const { app, BrowserWindow, Tray, Menu, nativeImage, ipcMain, Notification, shel
 const path = require('path')
 const Store = require('electron-store')
 const { startPoller, stopPoller } = require('./poller')
+const { sendFeedback } = require('./feedback')
 
 const store = new Store({
   defaults: {
@@ -201,6 +202,7 @@ ipcMain.handle('get-status', () => ({
 }))
 
 ipcMain.handle('get-app-version', () => app.getVersion())
+ipcMain.handle('send-feedback', (_, fields) => sendFeedback(fields, app.getVersion()))
 
 ipcMain.handle('overpass-query', async (_, query) => {
   const url = 'https://overpass.kumi.systems/api/interpreter'

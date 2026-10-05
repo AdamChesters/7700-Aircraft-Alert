@@ -73,7 +73,12 @@ export const bridge = {
 
   async getAppVersion() {
     if (isElectron) return window.app7700.getAppVersion()
-    return '0.0.0'
+    return '1.1.0'
+  },
+
+  async sendFeedback(fields) {
+    if (isElectron) return window.app7700.sendFeedback(fields)
+    return { ok: false, error: 'Feedback delivery is available in the desktop app. This browser preview sends nothing.' }
   },
 
   async simulateAlert(ac) {

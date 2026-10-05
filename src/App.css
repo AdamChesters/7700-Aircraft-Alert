@@ -206,3 +206,8 @@
   display: flex;
   flex-direction: column;
 }
+
+.support-sidebar-button { display:flex; align-items:center; justify-content:center; gap:8px; min-height:48px; margin:12px 8px; padding:10px 8px; border:1px solid var(--amber); border-radius:6px; color:var(--amber); background:var(--bg-elevated); font:600 14px var(--font-ui); cursor:pointer; text-align:left; }
+.support-sidebar-button:hover { background:var(--bg-hover); }
+.support-sidebar-button:focus-visible { outline:2px solid var(--amber); outline-offset:3px; }
+.support-sidebar-button svg { flex-shrink:0; }

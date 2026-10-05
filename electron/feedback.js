@@ -25,7 +25,7 @@ async function sendFeedback(fields, version, endpoint = FEEDBACK_ENDPOINT, reque
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
       signal: AbortSignal.timeout(15000),
     })
-    if (!response.ok) throw new Error('delivery failed')
+    if (response.status !== 200) throw new Error('delivery failed')
     const result = await response.json()
     if (result?.ok !== true) throw new Error('delivery not confirmed')
     return { ok: true }

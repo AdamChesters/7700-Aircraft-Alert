@@ -19,14 +19,14 @@ test('invalid, blank and oversized fields never make a request', async () => {
 test('submission sends only validated app, version and contact/message fields', async () => {
   let captured
   const result = await sendFeedback(fields, '1.1.0', 'https://example.invalid/feedback', async (url, options) => {
-    captured = { url, options }; return { ok: true, json: async () => ({ ok: true }) }
+    captured = { url, options }; return { status: 200, ok: true, json: async () => ({ ok: true }) }
   })
   assert.equal(result.ok, true)
   assert.equal(captured.options.method, 'POST')
   assert.deepEqual(JSON.parse(captured.options.body), feedbackPayload(fields, '1.1.0'))
 })
 test('HTTP and connection failures report failure without leaking request details', async () => {
-  for (const request of [async () => ({ ok: false }), async () => ({ ok: true, json: async () => ({ ok: false }) }), async () => ({ ok: true, json: async () => ({}) }), async () => { throw new Error('secret transport detail') }]) {
+  for (const request of [async () => ({ status: 503, ok: false }), async () => ({ status: 202, ok: true, json: async () => ({ ok: true }) }), async () => ({ status: 200, ok: true, json: async () => ({ ok: false }) }), async () => ({ status: 200, ok: true, json: async () => ({}) }), async () => { throw new Error('secret transport detail') }]) {
     assert.deepEqual(await sendFeedback(fields, '1.1.0', 'https://example.invalid', request), {
       ok: false, error: 'Could not send feedback. Please try again, or use Discord.',
     })

@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { Radio, Clock, Settings, BookOpen, AlertTriangle } from 'lucide-react'
+import { Radio, Clock, Settings, BookOpen, AlertTriangle, MessageSquareHeart } from 'lucide-react'
 import appIcon from './assets/icon.png'
+import SupportDialog from './components/SupportDialog.jsx'
 import Dashboard from './panels/Dashboard.jsx'
 import History from './panels/History.jsx'
 import SettingsPanel from './panels/Settings.jsx'
@@ -16,7 +17,7 @@ const NAV = [
   { id: 'settings',  label: 'SETTINGS',  icon: Settings },
 ]
 
-const GITHUB_REPO = 'Obsidiate/7700-Aircraft-Alert'
+const GITHUB_REPO = 'AdamChesters/7700-Aircraft-Alert'
 const RELEASES_URL = `https://github.com/${GITHUB_REPO}/releases`
 
 function compareSemver(a, b) {
@@ -29,6 +30,10 @@ function compareSemver(a, b) {
 }
 
 export default function App() {
+  const [supportOpen, setSupportOpen] = useState(false)
+  const [appVersion, setAppVersion] = useState('')
+  const [updateBusy, setUpdateBusy] = useState(false)
+  const [updateError, setUpdateError] = useState('')
   const [panel, setPanel] = useState('dashboard')
   const [alerts, setAlerts] = useState([])
   const [aircraft, setAircraft] = useState([])
@@ -56,26 +61,32 @@ export default function App() {
       setLastPoll(new Date())
     })
 
-    // Version check
-    bridge.getAppVersion().then(currentVersion => {
-      fetch(`https://api.github.com/repos/${GITHUB_REPO}/releases/latest`, {
-        headers: { 'Accept': 'application/vnd.github+json' }
-      })
-        .then(r => r.ok ? r.json() : null)
-        .then(data => {
-          if (!data?.tag_name) return
-          const latest = data.tag_name
-          setLatestVersion(latest)
-          setVersionStatus(compareSemver(currentVersion, latest) > 0 ? 'outdated' : 'current')
-        })
-        .catch(() => {})
-    })
+    checkForUpdates()
 
     return () => {
       bridge.removeAllListeners('new-alert')
       bridge.removeAllListeners('aircraft-update')
     }
   }, [])
+
+  async function checkForUpdates() {
+    if (updateBusy) return
+    setUpdateBusy(true)
+    setUpdateError('')
+    try {
+      const current = await bridge.getAppVersion()
+      setAppVersion(current)
+      const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/releases/latest`, {
+        headers: { Accept: 'application/vnd.github+json' }, signal: AbortSignal.timeout(15000),
+      })
+      if (!response.ok) throw new Error('Could not check for updates. Please try again.')
+      const data = await response.json()
+      if (!data?.tag_name) throw new Error('Could not check for updates. Please try again.')
+      setLatestVersion(data.tag_name)
+      setVersionStatus(compareSemver(current, data.tag_name) > 0 ? 'outdated' : 'current')
+    } catch (error) { setUpdateError(error.message || 'Could not check for updates. Please try again.') }
+    finally { setUpdateBusy(false) }
+  }
 
   function triggerFlash(alert) {
     clearTimeout(flashTimerRef.current)
@@ -171,6 +182,9 @@ export default function App() {
           ))}
         </div>
 
+        <button className="support-sidebar-button" onClick={() => setSupportOpen(true)}>
+          <MessageSquareHeart size={18} /><span>Feedback / Donate</span>
+        </button>
         <div className="sidebar-status">
           <div className="status-row">
             <span className={`status-dot ${lastPoll ? 'active' : 'idle'}`} />
@@ -192,6 +206,10 @@ export default function App() {
         </div>
       </nav>
 
+      {supportOpen && <SupportDialog onClose={() => setSupportOpen(false)} version={appVersion || '1.1.0'}
+        updateStatus={updateBusy ? 'Checking for updates...' : updateError || (versionStatus === 'current' ? 'Up to date' : versionStatus === 'outdated' ? `Version ${latestVersion} available` : 'Updates not checked')}
+        updateBusy={updateBusy} updateAvailable={versionStatus === 'outdated' ? latestVersion : ''}
+        onUpdate={() => versionStatus === 'outdated' ? bridge.openExternal(RELEASES_URL) : checkForUpdates()} />}
       {/* Main content */}
       <main className="main-content">
         {panel === 'dashboard' && (

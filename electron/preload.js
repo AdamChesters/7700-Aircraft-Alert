@@ -30,6 +30,8 @@ contextBridge.exposeInMainWorld('app7700', {
   getAppVersion: () => ipcRenderer.invoke('get-app-version'),
   simulateAlert: (ac) => ipcRenderer.invoke('simulate-alert', ac),
 
+  sendFeedback: (fields) => ipcRenderer.invoke('send-feedback', fields),
+
   // Overpass proxy (avoids CSP restrictions in renderer)
   overpassQuery: (query) => ipcRenderer.invoke('overpass-query', query),
 })

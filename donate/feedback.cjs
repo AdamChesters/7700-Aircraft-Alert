@@ -26,8 +26,16 @@ async function sendFeedback(fields, version, appId, endpoint = FEEDBACK_ENDPOINT
       signal: AbortSignal.timeout(15000),
     })
     if (response.status !== content.feedback.ack.httpStatus) throw new Error('delivery failed')
-    const result = await response.json()
-    if (result?.ok !== true) throw new Error('delivery not confirmed')
+    if (!/^application\/json(?:\s*;|$)/i.test(response.headers.get('content-type') || '')) throw new Error('invalid acknowledgement type')
+    const chunks = []
+    let received = 0
+    for await (const chunk of response.body) {
+      received += chunk.length
+      if (received > content.feedback.ack.maxBytes) throw new Error('acknowledgement too large')
+      chunks.push(Buffer.from(chunk))
+    }
+    const result = JSON.parse(Buffer.concat(chunks).toString('utf8'))
+    if (result?.ok !== true || Object.keys(result).length !== 1) throw new Error('delivery not confirmed')
     return { ok: true }
   } catch { return { ok: false, error: content.feedback.failure } }
 }

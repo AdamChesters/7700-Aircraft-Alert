@@ -19,7 +19,7 @@ This tool is a hobbyist/enthusiast project intended for light personal use only.
 
 ## Download
 
-**[7700 Aircraft Alert V1.0.0.exe](https://github.com/AdamChesters/7700-Aircraft-Alert/releases/latest)** — portable single file, no installation required. Settings persist between sessions.
+**[7700 Aircraft Alert V1.2.0.exe](https://github.com/AdamChesters/7700-Aircraft-Alert/releases/latest)** — portable single file for Windows 10 or later (64-bit), no installation required. Settings persist between sessions. To update, download the new file and run it in place of the old one; your settings are kept.
 
 ## Development 
 
@@ -82,7 +82,7 @@ Issues welcome in the issues tab above!
 
 ## Quick Start
 
-Requires Node.js 18+.
+Requires Node.js 22.12+.
 
 ```bash
 npm install

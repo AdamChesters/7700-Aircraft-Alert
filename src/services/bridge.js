@@ -73,7 +73,7 @@ export const bridge = {
 
   async getAppVersion() {
     if (isElectron) return window.app7700.getAppVersion()
-    return '1.1.0'
+    return '1.2.0'
   },
 
   async sendFeedback(fields) {

@@ -39,3 +39,12 @@ test('HTTP and connection failures report failure without leaking request detail
     })
   }
 })
+test('bundled support content is component 2.0.0 and every icon it names is bundled', () => {
+  const fs = require('node:fs'), path = require('node:path'), dir = path.join(__dirname, '..', 'donate')
+  const content = require('../donate/content.json'), manifest = require('../donate/manifest.json')
+  assert.equal(manifest.version, '2.0.0')
+  assert.equal(content.schemaVersion, manifest.schemaVersion)
+  const dialog = fs.readFileSync(path.join(dir, 'SupportDialog.jsx'), 'utf8')
+  for (const item of [...content.socials, ...content.platforms]) assert.ok(fs.existsSync(path.join(dir, item.icon)), item.icon)
+  for (const social of content.socials) assert.ok(dialog.includes(`'${social.icon}':`), social.icon)
+})

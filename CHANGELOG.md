@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.2.0
+
+- Refresh the Feedback / Support dialog: Discord, Reddit, GitHub, LinkedIn and AdamCh.com buttons, "Check for updates" and "Feedback form" side by side, and updated support text.
+- Rename the sidebar button to "Feedback / Support" and the PayPal button to "Support with PayPal".
+- Update Electron from 29 to 44 for current Chromium and Node.js security fixes.
+- Update a bundled settings-validation dependency (fast-uri) with security fixes.
+
 ## 1.1.0
 
 - Bundle the standardized support component, copy and feedback contract under `/donate`.

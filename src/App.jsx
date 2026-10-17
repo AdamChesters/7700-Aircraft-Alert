@@ -183,7 +183,7 @@ export default function App() {
         </div>
 
         <button className="support-sidebar-button" onClick={() => setSupportOpen(true)}>
-          <MessageSquareHeart size={18} /><span>Feedback / Donate</span>
+          <MessageSquareHeart size={18} /><span>Feedback / Support</span>
         </button>
         <div className="sidebar-status">
           <div className="status-row">
@@ -206,7 +206,7 @@ export default function App() {
         </div>
       </nav>
 
-      {supportOpen && <SupportDialog onClose={() => setSupportOpen(false)} appName='7700 Aircraft Alert' appLogo={appIcon} appId='7700-Aircraft-Alert' appVersion={appVersion || '1.1.0'} openExternal={bridge.openExternal} sendFeedback={bridge.sendFeedback}
+      {supportOpen && <SupportDialog onClose={() => setSupportOpen(false)} appName='7700 Aircraft Alert' appLogo={appIcon} appId='7700-Aircraft-Alert' appVersion={appVersion || '1.2.0'} openExternal={bridge.openExternal} sendFeedback={bridge.sendFeedback}
         updateStatus={updateBusy ? 'Checking for updates...' : updateError || (versionStatus === 'current' ? 'Up to date' : versionStatus === 'outdated' ? `Version ${latestVersion} available` : 'Updates not checked')}
         updateBusy={updateBusy} updateAvailable={versionStatus === 'outdated' ? latestVersion : ''}
         checkForUpdates={() => versionStatus === 'outdated' ? bridge.openExternal(RELEASES_URL) : checkForUpdates()} />}
